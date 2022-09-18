@@ -56,6 +56,53 @@ tkn_s *create_token(char *str)
     return tok;
 }
 
+void    free_token(tkn_s *tok)
+{
+    if (tok->text)
+    {
+        free(tok->text);
+    }
+    free(tok);
+}
+
+tkn_s *tokenize(src_a *src)
+{
+    int endloop = 0;
+
+    if (!src || !src->buffer || !src->bufsize)
+    {
+        errno = ENODATA;
+        return &eof_token;
+    }
+    
+    if (!tok_buf)
+    {
+        tok_buffsize = 1024;
+        tok_buf = malloc(tok_buffsize);
+        if (!tok_buf)
+        {
+            errno = ENOMEM;
+            return &eof_token;
+        }
+    }
+
+    tok_buffindex = 0;
+    tok_buf[0] = '\0';
+    
+    char nc = next_char(src);
+
+    if (nc == ERRCHAR || nc == EOF)
+    {
+        return &eof_token;
+    }
+    while ((nc = next_char(src)) != EOF)
+    {
+        
+    }
+    
+    
+    
+}
 
 
 
